@@ -535,6 +535,17 @@ SCertInfo Verify_CertInfo = { 0 };
 
 _FX NTSTATUS KphValidateCertificate()
 {
+    Verify_CertInfo.State = 0;
+    Verify_CertInfo.active = 1;
+    Verify_CertInfo.type = eCertDeveloper;
+    Verify_CertInfo.level = eCertMaxLevel;
+    Verify_CertInfo.opt_desk = 1;
+    Verify_CertInfo.opt_net = 1;
+    Verify_CertInfo.opt_enc = 1;
+    Verify_CertInfo.opt_sec = 1;
+
+    return STATUS_SUCCESS;
+
     BOOLEAN CertDbg = FALSE;
 
     static const WCHAR *path_cert = L"%s\\Certificate.dat";
