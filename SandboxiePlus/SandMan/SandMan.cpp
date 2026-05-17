@@ -508,6 +508,7 @@ CSandMan::CSandMan(QWidget *parent)
 
 	UpdateDrives();
 
+	// OpenSandbox modification: Change application branding
 #ifdef INSIDER_BUILD
 	QString appTitle = tr("OpenSandbox Insider [%1]").arg(QString(__DATE__));
 #else
@@ -2807,6 +2808,7 @@ void CSandMan::OnBoxCleaned(CSandBoxPlus* pBoxEx)
 
 void CSandMan::OnStatusChanged()
 {
+	// OpenSandbox modification: Change application branding
 #ifdef INSIDER_BUILD
 	QString appTitle = tr("OpenSandbox Insider [%1]").arg(QString(__DATE__));
 #else
@@ -3468,6 +3470,7 @@ bool CSandMan::SetCertificate(const QByteArray& Certificate)
 
 bool CSandMan::CheckCertificate(QWidget* pWidget, int iType)
 {
+	// OpenSandbox modification: Bypass certificate checks so all features are available
 	return true;
 }
 
@@ -4841,7 +4844,7 @@ void CSandMan::OnAbout()
 
 		QMessageBox *msgBox = new QMessageBox(this);
 		msgBox->setAttribute(Qt::WA_DeleteOnClose);
-		msgBox->setWindowTitle(tr("About Sandboxie-Plus"));
+		msgBox->setWindowTitle(tr("About OpenSandbox"));
 		msgBox->setText(AboutCaption);
 		msgBox->setInformativeText(AboutText);
 

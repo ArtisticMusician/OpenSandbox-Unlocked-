@@ -236,7 +236,6 @@ CSettingsWindow::CSettingsWindow(QWidget* parent)
 	ui.tabsSupport->setCurrentIndex(0);
 	ui.tabsSupport->setTabIcon(0, CSandMan::GetIcon("Cert"));
 	ui.tabsSupport->setTabIcon(1, CSandMan::GetIcon("ReloadIni"));
-	ui.tabsSupport->removeTab(0);
 
 	ui.tabsAdvanced->setCurrentIndex(0);
 	ui.tabsAdvanced->setTabIcon(0, CSandMan::GetIcon("Options"));
@@ -3192,11 +3191,21 @@ void CSettingsWindow::LoadCertificate(QString CertPath)
 
 void CSettingsWindow::UpdateCert()
 {
-	ui.lblCertExp->setVisible(false);
-	ui.lblEvalCert->setVisible(false);
-
-	ui.lblCert->clear();
-	ui.lblCertOpt->clear();
+	// OpenSandbox modification: Hide all certificate UI elements.
+	ui.lblCert->hide();
+	ui.lblCertExp->hide();
+	ui.lblCertGuide->hide();
+	ui.lblCertOpt->hide();
+	ui.lblEvalCert->hide();
+	ui.lblSerial->hide();
+	ui.lblSupportCert->hide();
+	ui.txtCertificate->hide();
+	ui.txtSerial->hide();
+	ui.chkNoCheck->hide();
+	ui.btnGetCert->hide();
+	ui.btnClearCert->hide();
+	ui.btnCancelCert->hide();
+	ui.btnApplyCert->hide();
 
 	ui.radInsider->setEnabled(true);
 }
