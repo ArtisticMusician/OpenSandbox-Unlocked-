@@ -509,9 +509,9 @@ CSandMan::CSandMan(QWidget *parent)
 	UpdateDrives();
 
 #ifdef INSIDER_BUILD
-	QString appTitle = tr("OpenSandbox-Plus Insider [%1]").arg(QString(__DATE__));
+	QString appTitle = tr("OpenSandbox Insider [%1]").arg(QString(__DATE__));
 #else
-	QString appTitle = tr("OpenSandbox-Plus v%1 (Unlocked)").arg(GetVersion());
+	QString appTitle = tr("OpenSandbox v%1 (Unlocked)").arg(GetVersion());
 #endif
 
 	this->setWindowTitle(appTitle);
@@ -2808,9 +2808,9 @@ void CSandMan::OnBoxCleaned(CSandBoxPlus* pBoxEx)
 void CSandMan::OnStatusChanged()
 {
 #ifdef INSIDER_BUILD
-	QString appTitle = tr("OpenSandbox-Plus Insider [%1]").arg(QString(__DATE__));
+	QString appTitle = tr("OpenSandbox Insider [%1]").arg(QString(__DATE__));
 #else
-	QString appTitle = tr("OpenSandbox-Plus v%1 (Unlocked)").arg(GetVersion());
+	QString appTitle = tr("OpenSandbox v%1 (Unlocked)").arg(GetVersion());
 #endif
 
 	bool bConnected = theAPI->IsConnected();
@@ -4814,18 +4814,18 @@ void CSandMan::OnAbout()
 		}
 
 		QString AboutCaption = tr(
-			"<h3>About OpenSandbox-Plus (Unlocked)</h3>"
+			"<h3>About OpenSandbox (Unlocked)</h3>"
 			"<p>Version %1</p>"
 			"<p>" MY_COPYRIGHT_STRING "</p>"
 		).arg(theGUI->GetVersion(true));
 
 		QString CertInfo;
-		CertInfo = tr("This copy of OpenSandbox-Plus is unlocked with all premium features enabled.");
+		CertInfo = tr("This copy of OpenSandbox is unlocked with all premium features enabled.");
 
 		QString SbiePath = theAPI->GetSbiePath();
 
 		QString AboutText = tr(
-			"OpenSandbox-Plus is an unlocked open source continuation of Sandboxie.<br />"
+			"OpenSandbox is an unlocked open source continuation of Sandboxie.<br />"
 			"Visit <a href=\"https://sandboxie-plus.com\">sandboxie-plus.com</a> for more information.<br />"
 			"<br />"
 			"%2<br />"
