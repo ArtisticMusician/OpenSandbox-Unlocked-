@@ -3191,121 +3191,23 @@ void CSettingsWindow::LoadCertificate(QString CertPath)
 
 void CSettingsWindow::UpdateCert()
 {
-	ui.lblCertExp->setVisible(false);
-	ui.lblEvalCert->setVisible(g_Certificate.isEmpty());
+	// OpenSandbox modification: Hide all certificate UI elements.
+	ui.lblCert->hide();
+	ui.lblCertExp->hide();
+	ui.lblCertGuide->hide();
+	ui.lblCertOpt->hide();
+	ui.lblEvalCert->hide();
+	ui.lblSerial->hide();
+	ui.lblSupportCert->hide();
+	ui.txtCertificate->hide();
+	ui.txtSerial->hide();
+	ui.chkNoCheck->hide();
+	ui.btnGetCert->hide();
+	ui.btnClearCert->hide();
+	ui.btnCancelCert->hide();
+	ui.btnApplyCert->hide();
 
-	//ui.lblCertLevel->setVisible(!g_Certificate.isEmpty());
-	if (!g_Certificate.isEmpty())
-	{
-		ui.txtCertificate->setProperty("hidden", true);
-		int Pos = g_Certificate.indexOf("HWID:");
-		if (Pos == -1)
-			Pos = g_Certificate.indexOf("UPDATEKEY:");
-
-		QByteArray truncatedCert = (g_Certificate.left(Pos) + "...");
-		int namePos = truncatedCert.indexOf("NAME:");
-		int datePos = truncatedCert.indexOf("DATE:");
-		if (namePos != -1 && datePos != -1 && datePos > namePos)
-			truncatedCert = truncatedCert.mid(0, namePos + 5) + " ...\n" + truncatedCert.mid(datePos);
-		ui.txtCertificate->setPlainText(truncatedCert);
-		//ui.lblSupport->setVisible(false);
-
-		QString ReNewUrl = "https://sandboxie-plus.com/go.php?to=sbie-renew-cert";
-		if (CERT_IS_TYPE(g_CertInfo, eCertPatreon))
-			ReNewUrl = "https://xanasoft.com/get-supporter-certificate/";
-
-		QPalette palette = QApplication::palette();
-		if (theGUI->m_DarkTheme)
-			palette.setColor(QPalette::Text, Qt::black);
-		if (g_CertInfo.expired) {
-			palette.setColor(QPalette::Base, QColor(255, 255, 192));
-			QString infoMsg = tr("This supporter certificate has expired, please <a href=\"%1\">get an updated certificate</a>.").arg(ReNewUrl);
-			if (g_CertInfo.active) {
-				if (g_CertInfo.grace_period)
-					infoMsg.append(tr("<br /><font color='red'>Plus features will be disabled in %1 days.</font>").arg((g_CertInfo.expirers_in_sec + 30*60*60*24) / (60*60*24)));
-				else if (!g_CertInfo.outdated) // must be an expiren medium or large cert on an old build
-					infoMsg.append(tr("<br /><font color='red'>For the current build Plus features remain enabled</font>, but you no longer have access to Sandboxie-Live services, including compatibility updates and the online troubleshooting database."));
-			} else
-				infoMsg.append(tr("<br />Plus features are no longer enabled."));
-			ui.lblCertExp->setText(infoMsg);
-			ui.lblCertExp->setVisible(true);
-		}
-		else {
-			if (g_CertInfo.expirers_in_sec > 0 && g_CertInfo.expirers_in_sec < (60 * 60 * 24 * 30)) {
-				ui.lblCertExp->setText(tr("This supporter certificate will <font color='red'>expire in %1 days</font>, please <a href=\"%2\">get an updated certificate</a>.").arg(g_CertInfo.expirers_in_sec / (60*60*24)).arg(ReNewUrl));
-				ui.lblCertExp->setVisible(true);
-			}
-			/*#ifdef _DEBUG
-			else {
-			ui.lblCertExp->setText(tr("This supporter certificate is valid, <a href=\"%1\">check for an updated certificate</a>.").arg(ReNewUrl));
-			ui.lblCertExp->setVisible(true);
-			}
-			#endif*/
-			palette.setColor(QPalette::Base, QColor(192, 255, 192));
-		}
-		ui.txtCertificate->setPalette(palette);
-
-		//ui.lblCertLevel->setText(tr("Feature Level: %1").arg(GetCertLevel()));
-		//
-		//QStringList Infos;
-		//Infos += tr("Type: %1").arg(GetCertType());
-		//if (CERT_IS_INSIDER(g_CertInfo))
-		//	Infos += tr("Insider release capable");
-		//ui.lblCertLevel->setToolTip(Infos.join("\n"));
-
-		//if (CERT_IS_TYPE(g_CertInfo, eCertBusiness)) {
-		//	ScanForSeats();
-		//	QTimer::singleShot(1000, this, [=]() {
-		//		QString CntInfo = QString::number(CountSeats());
-		//		QString Amount = GetArguments(g_Certificate, L'\n', L':').value("AMOUNT");
-		//		if (!Amount.isEmpty())
-		//			CntInfo += "/" + Amount;
-		//		ui.lblCertCount->setText(CntInfo);
-		//		ui.lblCertCount->setToolTip(tr("Count of certificates in use"));
-		//	});
-		//}
-
-		QString ExpInfo;
-		if(g_CertInfo.expirers_in_sec > 0)
-			ExpInfo = tr("Expires in: %1 days").arg(g_CertInfo.expirers_in_sec / (60*60*24));
-		else if(g_CertInfo.expirers_in_sec < 0)
-			ExpInfo = tr("Expired: %1 days ago").arg(-g_CertInfo.expirers_in_sec / (60*60*24));
-		if (CERT_IS_TYPE(g_CertInfo, eCertPatreon))
-			ExpInfo += tr("; eligible Patreons can always <a href=\"https://xanasoft.com/get-supporter-certificate/\">obtain an updated certificate</a> from xanasoft.com");
-		ui.lblCert->setText(ExpInfo);
-
-		QStringList Options;
-		if (g_CertInfo.opt_sec) Options.append("SBox");
-		else Options.append(QString("<font color='gray'>SBox</font>"));
-		if (g_CertInfo.opt_enc) Options.append("EBox");
-		else Options.append(QString("<font color='gray'>EBox</font>"));
-		if (g_CertInfo.opt_net) Options.append("NetI");
-		else Options.append(QString("<font color='gray'>NetI</font>"));
-		if (g_CertInfo.opt_desk) Options.append("Desk");
-		else Options.append(QString("<font color='gray'>Desk</font>"));
-		ui.lblCertOpt->setText(tr("Options: %1").arg(Options.join(", ")));
-
-		QStringList OptionsEx;
-		OptionsEx.append(tr("Security/Privacy Enhanced & App Boxes (SBox): %1").arg(g_CertInfo.opt_sec ? tr("Enabled") : tr("Disabled")));
-		OptionsEx.append(tr("Encrypted Sandboxes (EBox): %1").arg(g_CertInfo.opt_enc ? tr("Enabled") : tr("Disabled")));
-		OptionsEx.append(tr("Network Interception (NetI): %1").arg(g_CertInfo.opt_net ? tr("Enabled") : tr("Disabled")));
-		OptionsEx.append(tr("Sandboxie Desktop (Desk): %1").arg(g_CertInfo.opt_desk ? tr("Enabled") : tr("Disabled")));
-		ui.lblCertOpt->setToolTip(OptionsEx.join("\n"));
-	}
-	else
-	{
-		ui.lblCert->clear();
-		ui.lblCertOpt->clear();
-
-		int EvalCount = theConf->GetInt("User/EvalCount", 0);
-		if(EvalCount >= EVAL_MAX)
-			ui.lblEvalCert->setText(tr("<b>You have used %1/%2 evaluation certificates. No more free certificates can be generated.</b>").arg(EvalCount).arg(EVAL_MAX));
-		else
-			ui.lblEvalCert->setText(tr("<b><a href=\"_\">Get a free evaluation certificate</a> and enjoy all premium features for %1 days.</b>").arg(EVAL_DAYS));
-		ui.lblEvalCert->setToolTip(tr("You can request a free %1-day evaluation certificate up to %2 times per hardware ID.").arg(EVAL_DAYS).arg(EVAL_MAX));
-	}
-
-	ui.radInsider->setEnabled(CERT_IS_INSIDER(g_CertInfo));
+	ui.radInsider->setEnabled(true);
 }
 
 void CSettingsWindow::OnGetCert()
