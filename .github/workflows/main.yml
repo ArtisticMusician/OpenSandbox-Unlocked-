@@ -180,23 +180,28 @@ jobs:
       - name: Collect installer assets
         run: Installer\get_assets.cmd
 
-      - name: Upload installer assets
-        #if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v7.0.1
-        with:
-          name: Assets
-          path: |
-            Installer/Assets/*
-          retention-days: 60
+      - name: Extract Sandboxie Version
+        shell: bash
+        run: |
+          VERSION_MJR=$(grep 'define VERSION_MJR' Sandboxie/common/my_version.h | awk '{print $3}')
+          VERSION_MIN=$(grep 'define VERSION_MIN' Sandboxie/common/my_version.h | awk '{print $3}')
+          VERSION_REV=$(grep 'define VERSION_REV' Sandboxie/common/my_version.h | awk '{print $3}')
+          echo "sbie_version=${VERSION_MJR}.${VERSION_MIN}.${VERSION_REV}" >> $GITHUB_ENV
 
-      - name: Upload Sandboxie x64
-        #if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v7.0.1
+      - name: Compile Installer with InnoSetup
+        run: |
+          ISCC.exe /ORelease Installer\Sandboxie-Plus.iss /DMyAppVersion=${{ env.sbie_version }} /DMyAppArch=x64 /DMyAppSrc=SbiePlus_x64
+
+      - name: Create GitHub Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
         with:
-          name: Sandboxie_x64
-          path: |
-            Installer/SbiePlus_x64/*
-          retention-days: 60
+          files: Release\OpenSandbox_v${{ env.sbie_version }}.exe
+          name: OpenSandbox Release ${{ env.sbie_version }}
+          tag_name: v${{ env.sbie_version }}
+          draft: false
+          prerelease: false
+
 
 
 
@@ -300,11 +305,24 @@ jobs:
       - name: Merging Build
         run: Installer\copy_build.cmd ARM64 build_qt6
 
-      - name: Upload Sandboxie ARM64
-        #if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
-        uses: actions/upload-artifact@v7.0.1
+      - name: Extract Sandboxie Version
+        shell: bash
+        run: |
+          VERSION_MJR=$(grep 'define VERSION_MJR' Sandboxie/common/my_version.h | awk '{print $3}')
+          VERSION_MIN=$(grep 'define VERSION_MIN' Sandboxie/common/my_version.h | awk '{print $3}')
+          VERSION_REV=$(grep 'define VERSION_REV' Sandboxie/common/my_version.h | awk '{print $3}')
+          echo "sbie_version=${VERSION_MJR}.${VERSION_MIN}.${VERSION_REV}" >> $GITHUB_ENV
+
+      - name: Compile ARM64 Installer with InnoSetup
+        run: |
+          ISCC.exe /ORelease Installer\Sandboxie-Plus.iss /DMyAppVersion=${{ env.sbie_version }} /DMyAppArch=arm64 /DMyAppSrc=SbiePlus_a64
+
+      - name: Create GitHub Release (ARM64)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
         with:
-          name: Sandboxie_ARM64
-          path: |
-            Installer/SbiePlus_a64/*
-          retention-days: 60
+          files: Release\OpenSandbox_v${{ env.sbie_version }}.exe
+          name: OpenSandbox Release ${{ env.sbie_version }} (ARM64)
+          tag_name: v${{ env.sbie_version }}-arm64
+          draft: false
+          prerelease: false
