@@ -1,4 +1,4 @@
-# Sandboxie Plus / Classic
+# OpenSandbox
 
 <p align='center'>
 EN | <a href='./README_zh_CN.md'>中文</a>
@@ -12,9 +12,9 @@ EN | <a href='./README_zh_CN.md'>中文</a>
 |         :---:         |          :---:         |          :---:                |          :---:            |          :---:            |
 | Windows 7 or higher (64-bit) |  [CHANGELOG.md](./CHANGELOG.md)  |  [CONTRIBUTING.md](./CONTRIBUTING.md)  |   [SECURITY.md](./SECURITY.md)  |  [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)  |
 
-Sandboxie is a sandbox-based isolation software for Windows NT-based operating systems that creates a secure operating environment in which applications can be run or installed without permanently modifying local & mapped drives or the Windows registry. An isolated virtual environment allows controlled testing of untrusted programs and web surfing.<br>
+OpenSandbox is a sandbox-based isolation software for Windows NT-based operating systems that creates a secure operating environment in which applications can be run or installed without permanently modifying local & mapped drives or the Windows registry. An isolated virtual environment allows controlled testing of untrusted programs and web surfing.<br>
 
-Sandboxie allows you to create virtually unlimited sandboxes and run them alone or simultaneously to isolate programs from the host and each other, while also allowing you to run as many programs simultaneously in a single box as you wish.
+OpenSandbox allows you to create virtually unlimited sandboxes and run them alone or simultaneously to isolate programs from the host and each other, while also allowing you to run as many programs simultaneously in a single box as you wish.
 
 **Note: This is a community fork that took place after the release of the Sandboxie source code and not the official continuation of the previous development (see the [project history](#project-history) and [#2926](https://github.com/sandboxie-plus/Sandboxie/issues/2926)).**
 
@@ -28,10 +28,10 @@ Sandboxie allows you to create virtually unlimited sandboxes and run them alone 
 
 ## 🚀 Features
 
-Sandboxie is available in two editions, Plus and Classic. They both share the same core components, this means they have the same level of security and compatibility.
+OpenSandbox is available in two editions, Plus and Classic. They both share the same core components, this means they have the same level of security and compatibility.
 What's different is the availability of features in the user interface.
 
-Sandboxie Plus has a modern Qt-based UI, which supports all new features that have been added since the project went open source:
+OpenSandbox has a modern Qt-based UI, which supports all new features that have been added since the project went open source:
 
   * Snapshot Manager - takes a copy of any box in order to be restored when needed
   * Maintenance menu - allows to uninstall/install/start/stop Sandboxie driver and service when needed
@@ -69,7 +69,7 @@ Sandboxie Plus has a modern Qt-based UI, which supports all new features that ha
 
 More features can be spotted by finding the sign `=` through the shortcut key Ctrl+F in the [CHANGELOG.md](./CHANGELOG.md) file.
 
-Sandboxie Classic has the old no longer developed MFC-based UI, hence it lacks native interface support for Plus features. Although some of the missing features can be configured manually in the Sandboxie.ini configuration file or even replaced with [custom scripts](https://sandboxie-website-archive.github.io/www.sandboxie.com/old-forums/viewforum1a2d1a2d.html?f=22), the Classic edition is not recommended for users who want to explore the latest security options.
+OpenSandbox Classic has the old no longer developed MFC-based UI, hence it lacks native interface support for Plus features. Although some of the missing features can be configured manually in the Sandboxie.ini configuration file or even replaced with [custom scripts](https://sandboxie-website-archive.github.io/www.sandboxie.com/old-forums/viewforum1a2d1a2d.html?f=22), the Classic edition is not recommended for users who want to explore the latest security options.
 
 ## 📚 Documentation
 
@@ -97,23 +97,12 @@ Sandboxie's functionality can be enhanced with specialized tools like the follow
 | 2013 - 2017         | Invincea Inc.    |
 | 2017 - 2020         | Sophos Group plc |
 | 8 April 2020 - [open-source code](https://community.sophos.com/sandboxie/f/forum/119641/important-sandboxie-open-source-code-is-available-for-download) | Sophos Ltd. |
-| 9 April 2020 onwards - project fork | David Xanatos |
+| 9 April 2020 - 2024 | Previous Maintainer (Sandboxie-Plus) |
+| 2024 onwards - OpenSandbox fork | Community |
 
 Looking for older Sandboxie versions? Check the [version history](https://github.com/sandboxie-plus/sandboxie-old).
 
 See the current [roadmap](https://www.wilderssecurity.com/threads/updated-sandboxie-plus-roadmap.456886/).
-
-## 📌 Project support / sponsorship
-
-[<img align="left" height="64" width="64" src="./.github/images/binja-love.png">](https://binary.ninja/)
-Thank you [Vector 35](https://vector35.com/) for providing a [Binary Ninja](https://binary.ninja/) license to help with reverse engineering.
-<br>
-Binary Ninja is a multi-platform interactive disassembler, decompiler, and binary analysis tool for reverse engineers, malware analysts, vulnerability researchers, and software developers.<br>
-<br>
-[<img align="left" height="64" width="64" src="./.github/images/Icons8_logo.png">](https://icons8.de/)Thank you [Icons8](https://icons8.de/) for providing icons for the project.
-<br>
-<br>
-<br>
 
 ## 🤝 Support the project
 
@@ -177,7 +166,7 @@ If you find Sandboxie useful, then feel free to contribute through our [Contribu
 - takahiro-itou, lllIIIlll - Japanese
 - VenusGirl - Korean
 - divinity76 - Norwegian Bokmål
-- 7zip, AndrzejRafalowski - Polish ([provided separately](https://forum.xanasoft.com/threads/polish-translation.4/page-2))
+- 7zip, AndrzejRafalowski - Polish ([provided separately](https://forum.opensandbox.com/threads/polish-translation.4/page-2))
 - JNylson - Portuguese and Brazilian Portuguese
 - lufog, marat2509 - Russian
 - LumitoLuma, sebadamus - Spanish
